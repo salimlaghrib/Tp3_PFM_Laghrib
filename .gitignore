@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+client/node_modules/
+
+# # Truffle build artifacts
+# build/
+
+# Frontend build outputs (Vite / CRA)
+client/dist/
+client/build/
+
+# Report / documentation (do not publish)
+doc/
+
+# LaTeX temporary files
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.log
+*.out
+*.synctex.gz
+*.toc

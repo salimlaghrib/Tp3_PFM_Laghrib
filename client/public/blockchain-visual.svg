@@ -1,0 +1,24 @@
+<svg width="900" height="520" viewBox="0 0 900 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="520" rx="28" fill="#0B1F33"/>
+  <path d="M116 120L255 82L390 142L536 92L704 132L790 250L704 388L534 424L390 334L240 392L116 292V120Z" stroke="#35C7B2" stroke-width="3" stroke-opacity="0.75"/>
+  <path d="M255 82L240 392M390 142V334M536 92L534 424M704 132V388M116 292L390 142M390 334L704 132M240 392L536 92M534 424L790 250" stroke="#6FA8DC" stroke-width="2" stroke-opacity="0.4"/>
+  <g fill="#F7B733">
+    <circle cx="116" cy="120" r="17"/>
+    <circle cx="255" cy="82" r="17"/>
+    <circle cx="390" cy="142" r="17"/>
+    <circle cx="536" cy="92" r="17"/>
+    <circle cx="704" cy="132" r="17"/>
+    <circle cx="790" cy="250" r="17"/>
+    <circle cx="704" cy="388" r="17"/>
+    <circle cx="534" cy="424" r="17"/>
+    <circle cx="390" cy="334" r="17"/>
+    <circle cx="240" cy="392" r="17"/>
+    <circle cx="116" cy="292" r="17"/>
+  </g>
+  <g fill="#35C7B2">
+    <rect x="305" y="219" width="118" height="72" rx="16"/>
+    <rect x="476" y="219" width="118" height="72" rx="16"/>
+  </g>
+  <path d="M340 243H388M340 266H376M511 243H560M511 266H546" stroke="#0B1F33" stroke-width="8" stroke-linecap="round"/>
+  <text x="450" y="474" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="800" fill="#FFFFFF">Solidity + Truffle + React + Web3</text>
+</svg>
