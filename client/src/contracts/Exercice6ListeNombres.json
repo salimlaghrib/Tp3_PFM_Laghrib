@@ -6361,12 +6361,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x7c1f566Fb88a2C07fc9B596eFbE94A1a9754cbC3",
-      "transactionHash": "0x9418b1ed5c14c13fdc1c32221b7bf3648e872ff4fd900735dbb2311512d533c0"
+      "address": "0xb5A074ca35350Ed1Cda9F014214AFC8c47c06dBf",
+      "transactionHash": "0x48e6c288cf4ca118f57188ae8538030c3f9fefc9a2ca9b9b6a0a231851aad87d"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2026-05-25T11:21:42.802Z",
+  "updatedAt": "2026-06-01T11:48:39.153Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

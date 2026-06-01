@@ -266,6 +266,10 @@ function Dapp() {
   const location = useLocation();
   const route = location.pathname === "/" ? "home" : location.pathname.replace("/", "");
 
+  useEffect(() => {
+    setLastTx(null);
+  }, [route]);
+
   const titleByRoute = useMemo(() => Object.fromEntries(exercises.map(([key, label, title]) => [key, `${label} - ${title}`])), []);
 
   useEffect(() => {
@@ -382,9 +386,17 @@ function Dapp() {
   }, [contracts, web3]);
 
   async function sendTransaction(callback) {
-    const receipt = await callback();
-    setLastTx(receipt);
-    return receipt;
+    try {
+      const receipt = await callback();
+      setLastTx(receipt);
+      return receipt;
+    } catch (transactionError) {
+      const receipt = transactionError?.receipt;
+      if (receipt) {
+        setLastTx(receipt);
+      }
+      throw transactionError;
+    }
   }
 
   async function refreshListe() {
@@ -415,18 +427,16 @@ function Dapp() {
               <Field label="Nombre 1" type="number" value={ex1.n1} onChange={(n1) => setEx1({ ...ex1, n1 })} />
               <Field label="Nombre 2" type="number" value={ex1.n2} onChange={(n2) => setEx1({ ...ex1, n2 })} />
             </div>
-            <div className="actions">
-              <button
-                disabled={disabled}
-                onClick={async () => {
-                  await sendTransaction(() => contracts.addition.methods.setNombres(ex1.n1, ex1.n2).send({ from: account }));
-                  const result = await contracts.addition.methods.addition1().call();
-                  setEx1({ ...ex1, result: `addition1 = ${result}` });
-                }}
-              >
-                Calculer addition1
-              </button>
-            </div>
+            <button
+              disabled={disabled}
+              onClick={async () => {
+                await sendTransaction(() => contracts.addition.methods.setNombres(ex1.n1, ex1.n2).send({ from: account }));
+                const result = await contracts.addition.methods.addition1().call();
+                setEx1({ ...ex1, result: `addition1 = ${result}` });
+              }}
+            >
+              Calculer addition1
+            </button>
             <div className="grid">
               <Field label="Parametre A" type="number" value={ex1.p1} onChange={(p1) => setEx1({ ...ex1, p1 })} />
               <Field label="Parametre B" type="number" value={ex1.p2} onChange={(p2) => setEx1({ ...ex1, p2 })} />
@@ -434,7 +444,10 @@ function Dapp() {
             <button
               disabled={disabled}
               onClick={async () => {
-                const result = await contracts.addition.methods.addition2(ex1.p1, ex1.p2).call();
+                await sendTransaction(() =>
+                  contracts.addition.methods.addition2Tx(ex1.p1, ex1.p2).send({ from: account })
+                );
+                const result = await contracts.addition.methods.lastAddition2().call();
                 setEx1({ ...ex1, result: `addition2 = ${result}` });
               }}
             >
@@ -454,7 +467,10 @@ function Dapp() {
               <button
                 disabled={disabled}
                 onClick={async () => {
-                  const result = await contracts.conversion.methods.etherEnWei(ex2.ether).call();
+                  await sendTransaction(() =>
+                    contracts.conversion.methods.etherEnWeiTx(ex2.ether).send({ from: account })
+                  );
+                  const result = await contracts.conversion.methods.lastWei().call();
                   setEx2({ ...ex2, result: `${ex2.ether} ETH = ${result} Wei` });
                 }}
               >
@@ -463,7 +479,10 @@ function Dapp() {
               <button
                 disabled={disabled}
                 onClick={async () => {
-                  const result = await contracts.conversion.methods.weiEnEther(ex2.wei).call();
+                  await sendTransaction(() =>
+                    contracts.conversion.methods.weiEnEtherTx(ex2.wei).send({ from: account })
+                  );
+                  const result = await contracts.conversion.methods.lastEther().call();
                   setEx2({ ...ex2, result: `${ex2.wei} Wei = ${result} ETH` });
                 }}
               >
@@ -496,7 +515,10 @@ function Dapp() {
               <button
                 disabled={disabled}
                 onClick={async () => {
-                  const result = await contracts.chaines.methods.concatener(ex3.a, ex3.b).call();
+                  await sendTransaction(() =>
+                    contracts.chaines.methods.concatenerTx(ex3.a, ex3.b).send({ from: account })
+                  );
+                  const result = await contracts.chaines.methods.lastString().call();
                   setEx3({ ...ex3, result });
                 }}
               >
@@ -505,7 +527,10 @@ function Dapp() {
               <button
                 disabled={disabled}
                 onClick={async () => {
-                  const result = await contracts.chaines.methods.concatenerAvec(ex3.avec).call();
+                  await sendTransaction(() =>
+                    contracts.chaines.methods.concatenerAvecTx(ex3.avec).send({ from: account })
+                  );
+                  const result = await contracts.chaines.methods.lastString().call();
                   setEx3({ ...ex3, result });
                 }}
               >
@@ -521,7 +546,10 @@ function Dapp() {
               <button
                 disabled={disabled}
                 onClick={async () => {
-                  const result = await contracts.chaines.methods.longueur(ex3.longueur).call();
+                  await sendTransaction(() =>
+                    contracts.chaines.methods.longueurTx(ex3.longueur).send({ from: account })
+                  );
+                  const result = await contracts.chaines.methods.lastLength().call();
                   setEx3({ ...ex3, result: `Longueur = ${result}` });
                 }}
               >
@@ -530,7 +558,10 @@ function Dapp() {
               <button
                 disabled={disabled}
                 onClick={async () => {
-                  const result = await contracts.chaines.methods.comparer(ex3.compA, ex3.compB).call();
+                  await sendTransaction(() =>
+                    contracts.chaines.methods.comparerTx(ex3.compA, ex3.compB).send({ from: account })
+                  );
+                  const result = await contracts.chaines.methods.lastComparison().call();
                   setEx3({ ...ex3, result: result ? "Chaines identiques" : "Chaines differentes" });
                 }}
               >
@@ -547,7 +578,10 @@ function Dapp() {
             <button
               disabled={disabled}
               onClick={async () => {
-                const result = await contracts.positif.methods.estPositif(ex4.nombre).call();
+                await sendTransaction(() =>
+                  contracts.positif.methods.estPositifTx(ex4.nombre).send({ from: account })
+                );
+                const result = await contracts.positif.methods.lastEstPositif().call();
                 setEx4({ ...ex4, result: result ? "Le nombre est positif" : "Le nombre n'est pas positif" });
               }}
             >
@@ -563,7 +597,10 @@ function Dapp() {
             <button
               disabled={disabled}
               onClick={async () => {
-                const result = await contracts.parite.methods.estPair(ex5.nombre).call();
+                await sendTransaction(() =>
+                  contracts.parite.methods.estPairTx(ex5.nombre).send({ from: account })
+                );
+                const result = await contracts.parite.methods.lastEstPair().call();
                 setEx5({ ...ex5, result: result ? "Le nombre est pair" : "Le nombre est impair" });
               }}
             >

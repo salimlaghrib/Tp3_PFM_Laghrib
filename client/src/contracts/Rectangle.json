@@ -5003,12 +5003,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xca6C4407e969f1D9Ee146dd00d3D26BCfDCF9E9f",
-      "transactionHash": "0xa64eef5b41bfc52d5dcd9030cc0dc5d66faa79dd6d4dee0fca3056caca8a5309"
+      "address": "0x1242bA7A77A7922fc9f461C9Dbf7157d8eF4E0C2",
+      "transactionHash": "0xb51a2c8776633f9011a8e85d2029aa3935ada33995cfb38d9f1d6016a71819b9"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2026-05-25T11:21:42.806Z",
+  "updatedAt": "2026-06-01T11:48:39.166Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
